@@ -24,11 +24,6 @@ func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_ = app.writeJSON(w, http.StatusOK, payload)
-
-	/* out, _ := json.MarshalIndent(payload, "", "\t")
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusAccepted)
-	w.Write(out) */
 }
 
 func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +48,7 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	jsonData, _ := json.MarshalIndent(a, "", "\t")
 
 	// call the service
-	request, err := http.NewRequest("POST", "http://authentication-service/authenticate", bytes.NewBuffer(jsonData))
+	request, err := http.NewRequest("POST", "http://authentication-service:4001/authenticate", bytes.NewBuffer(jsonData))
 	if err != nil {
 		app.errorJSON(w, err)
 		return
